@@ -1,0 +1,9 @@
+const AGGREGATION_IDS = {
+  2609: "eyJkYXRhIjp7InJhbmdlIjpbMTY5NTY5NzIwMCwxNjk1NzgzNjAwXX19",
+  2709: "eyJkYXRhIjp7InJhbmdlIjpbMTY5NTc4MzYwMCwxNjk1ODcwMDAwXX19",
+  2809: "eyJkYXRhIjp7InJhbmdlIjpbMTY5NTg3MDAwMCwxNjk1OTU2NDAwXX19",
+  2909: "eyJkYXRhIjp7InJhbmdlIjpbMTY5NTk1NjQwMCwxNjk2MDQyODAwXX19",
+  3009: "eyJkYXRhIjp7InJhbmdlIjpbMTY5NjA0MjgwMCwxNjk2MTI5MjAwXX19",
+};
+
+export default AGGREGATION_IDS;
