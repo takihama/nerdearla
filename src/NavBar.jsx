@@ -22,7 +22,7 @@ const NavBar = ({ onDateButtonClick }) => {
       {buttons.map((b) => (
         <Button
           key={b.name}
-          size="lg"
+          size={{ base: "xs", md: "sm", lg: "md" }}
           name={b.name}
           onClick={() => onButtonClick(b.name)}
           colorScheme="orange"
