@@ -1,5 +1,6 @@
 import {
   Card,
+  Center,
   ChakraProvider,
   Container,
   Divider,
@@ -11,6 +12,7 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
+  Spinner,
   Stack,
   Text,
   useDisclosure,
@@ -105,6 +107,7 @@ const TalkCard = ({
 const App = () => {
   const [talks, setTalks] = useState([]);
   const [filteredTalks, setFilteredTalks] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getTalks().then((response) => {
@@ -121,6 +124,7 @@ const App = () => {
       }, {});
       setTalks(groupedTalks);
       setFilteredTalks(groupedTalks["2023-09-26"]);
+      setLoading(false);
     });
   }, []);
 
@@ -135,25 +139,31 @@ const App = () => {
 
         <HeaderBanner />
 
-        <Flex>
-          {Object.keys(filteredTalks).map((type) => (
-            <>
-              <Stack key={type}>
-                {filteredTalks[type].map((talk) => (
-                  <TalkCard
-                    key={talk.id}
-                    beginsAt={talk.beginsAt}
-                    endsAt={talk.endsAt}
-                    title={talk.title}
-                    bannerUrl={talk.bannerUrl}
-                    htmlDescription={talk.htmlDescription}
-                    type={talk.type}
-                  />
-                ))}
-              </Stack>
-            </>
-          ))}
-        </Flex>
+        {loading ? (
+          <Center>
+            <Spinner />
+          </Center>
+        ) : (
+          <Flex>
+            {Object.keys(filteredTalks).map((type) => (
+              <>
+                <Stack key={type}>
+                  {filteredTalks[type].map((talk) => (
+                    <TalkCard
+                      key={talk.id}
+                      beginsAt={talk.beginsAt}
+                      endsAt={talk.endsAt}
+                      title={talk.title}
+                      bannerUrl={talk.bannerUrl}
+                      htmlDescription={talk.htmlDescription}
+                      type={talk.type}
+                    />
+                  ))}
+                </Stack>
+              </>
+            ))}
+          </Flex>
+        )}
       </Container>
     </ChakraProvider>
   );
