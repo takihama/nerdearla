@@ -15,6 +15,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import { InfoOutlineIcon, TimeIcon } from "@chakra-ui/icons";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import HeaderBanner from "./HeaderBanner";
@@ -44,7 +45,14 @@ const mapTalks = (talks) => {
   return talks.data.view.plannings.nodes;
 };
 
-const TalkCard = ({ beginsAt, endsAt, bannerUrl, title, htmlDescription }) => {
+const TalkCard = ({
+  beginsAt,
+  endsAt,
+  bannerUrl,
+  title,
+  htmlDescription,
+  type,
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -58,13 +66,30 @@ const TalkCard = ({ beginsAt, endsAt, bannerUrl, title, htmlDescription }) => {
           <ModalCloseButton />
           <ModalBody>
             <Image src={bannerUrl} onClick={onOpen} />
-            <Flex justifyContent={"space-between"}>
-              <Text fontStyle="normal" fontSize="medium" fontWeight="semibold">
+            <Flex alignItems={"center"}>
+              <TimeIcon />
+              <Text
+                marginX={4}
+                fontStyle="normal"
+                fontSize="medium"
+                fontWeight="semibold"
+              >
                 Inicia: {beginsAt.substring(11, 16)}
               </Text>
 
               <Text fontStyle="normal" fontSize="medium" fontWeight="semibold">
                 Termina: {endsAt.substring(11, 16)}
+              </Text>
+            </Flex>
+            <Flex alignItems={"center"}>
+              <InfoOutlineIcon />
+              <Text
+                marginX={4}
+                fontStyle="normal"
+                fontSize="medium"
+                fontWeight="semibold"
+              >
+                Sala: {type}
               </Text>
             </Flex>
             <Divider />
@@ -122,6 +147,7 @@ const App = () => {
                     title={talk.title}
                     bannerUrl={talk.bannerUrl}
                     htmlDescription={talk.htmlDescription}
+                    type={talk.type}
                   />
                 ))}
               </Stack>
