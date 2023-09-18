@@ -134,7 +134,7 @@ const App = () => {
 
   return (
     <ChakraProvider>
-      <Container maxW="full" bg="black" color="white" p="0">
+      <Container maxW="full" minH="100vh" bg="black" color="white">
         <NavBar onDateButtonClick={onDateButtonClick} />
 
         <HeaderBanner />
