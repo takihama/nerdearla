@@ -5,6 +5,8 @@ import {
   Container,
   Divider,
   Flex,
+  Grid,
+  GridItem,
   Image,
   Modal,
   ModalBody,
@@ -170,25 +172,32 @@ const App = () => {
             <Spinner />
           </Center>
         ) : (
-          <Flex gap={2}>
+          <Grid
+            templateColumns={`repeat(${
+              Object.keys(filteredTalks).length
+            }, 1fr)`}
+            gap={{ sm: 0.5, md: 2 }}
+          >
             {Object.keys(filteredTalks).map((type) => (
               <>
-                <Stack key={type}>
-                  {filteredTalks[type].map((talk) => (
-                    <TalkCard
-                      key={talk.id}
-                      beginsAt={talk.beginsAt}
-                      endsAt={talk.endsAt}
-                      title={talk.title}
-                      bannerUrl={talk.bannerUrl}
-                      htmlDescription={talk.htmlDescription}
-                      type={talk.type}
-                    />
-                  ))}
-                </Stack>
+                <GridItem key={type} colSpan={1}>
+                  <Stack gap={{ sm: 0.5, md: 2 }}>
+                    {filteredTalks[type].map((talk) => (
+                      <TalkCard
+                        key={talk.id}
+                        beginsAt={talk.beginsAt}
+                        endsAt={talk.endsAt}
+                        title={talk.title}
+                        bannerUrl={talk.bannerUrl}
+                        htmlDescription={talk.htmlDescription}
+                        type={talk.type}
+                      />
+                    ))}
+                  </Stack>
+                </GridItem>
               </>
             ))}
-          </Flex>
+          </Grid>
         )}
       </Container>
     </ChakraProvider>
