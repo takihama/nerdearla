@@ -191,7 +191,7 @@ const App = () => {
           >
             {Object.keys(filteredTalks).map((type) => (
               <GridItem key={type} colSpan={1}>
-                <Stack gap={{ base: 1,sm: 0.5, md: 2 }} minW={240} marginX={1}>
+                <Stack gap={{ base: 1, sm: 0.5, md: 2 }} minW={{base: 240, md: 0}} marginX={1}>
                   <Box bg={TRACK_COLORS[type]} textAlign="center">
                     <Text color="white" fontWeight="medium">{type}</Text>
                   </Box>
