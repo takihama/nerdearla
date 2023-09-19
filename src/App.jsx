@@ -43,9 +43,16 @@ const getTalks = async () =>
     },
   });
 
-const mapTalks = (talks) => {
-  return talks.data.view.plannings.nodes;
-};
+const mapTalks = (talks) =>
+  talks.data.view.plannings.nodes.map((t) => ({
+    ...t,
+    date: t.beginsAt.split("T")[0],
+    beginsAt: t.beginsAt.substring(11, 16),
+    endsAt: t.endsAt.substring(11, 16),
+    durationInMin:
+      (t.endsAt.substring(11, 13) - t.beginsAt.substring(11, 13)) * 60 +
+      (t.endsAt.substring(14, 16) - t.beginsAt.substring(11, 13)),
+  }));
 
 const TalkCard = ({
   beginsAt,
@@ -87,7 +94,7 @@ const TalkCard = ({
                   fontSize="medium"
                   fontWeight="semibold"
                 >
-                  {beginsAt.substring(11, 16)}
+                  {beginsAt}
                 </Text>
                 <Text>-</Text>
                 <Text
@@ -96,7 +103,7 @@ const TalkCard = ({
                   fontWeight="semibold"
                   marginX={2}
                 >
-                  {endsAt.substring(11, 16)}
+                  {endsAt}
                 </Text>
               </Flex>
               <Flex alignItems={"center"}>
@@ -132,7 +139,7 @@ const App = () => {
     getTalks().then((response) => {
       const mappedTalks = mapTalks(response.data);
       const groupedTalks = mappedTalks.reduce((acc, curr) => {
-        const dateKey = curr.beginsAt.split("T")[0];
+        const dateKey = curr.date;
 
         acc[dateKey] = acc[dateKey] || {};
 
