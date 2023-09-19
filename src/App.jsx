@@ -55,9 +55,6 @@ const mapTalks = (talks) =>
     date: t.beginsAt.split("T")[0],
     beginsAt: t.beginsAt.substring(11, 16),
     endsAt: t.endsAt.substring(11, 16),
-    durationInMin:
-      (t.endsAt.substring(11, 13) - t.beginsAt.substring(11, 13)) * 60 +
-      (t.endsAt.substring(14, 16) - t.beginsAt.substring(11, 13)),
   }));
 
 const TalkCard = ({
@@ -189,14 +186,14 @@ const App = () => {
             }, 1fr)`}
             gap={{ sm: 0.5, md: 2 }}
           >
-            {Object.keys(filteredTalks).map((type) => (
+            {Object.keys(filteredTalks).sort().map((type) => (
               <GridItem key={type} colSpan={1}>
                 <Stack gap={{ base: 1, sm: 0.5, md: 2 }} minW={{base: 240, md: 0}} marginX={1}>
                   <Box bg={TRACK_COLORS[type]} textAlign="center">
                     <Text color="white" fontWeight="medium">{type}</Text>
                   </Box>
                   <Stack overflowY="scroll" maxH={{base: "90vh", md: "none"}}>
-                    {filteredTalks[type].map((talk) => (
+                    {filteredTalks[type].sort((a, b) => a.beginsAt >= b.beginsAt ? 1 : -1).map((talk) => (
                       <TalkCard
                         key={talk.id}
                         beginsAt={talk.beginsAt}
