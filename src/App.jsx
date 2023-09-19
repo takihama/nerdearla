@@ -187,17 +187,19 @@ const App = () => {
                   <Box bg={TRACK_COLORS[type]} textAlign="center">
                     <Text color="white" fontWeight="medium">{type}</Text>
                   </Box>
-                  {filteredTalks[type].map((talk) => (
-                    <TalkCard
-                      key={talk.id}
-                      beginsAt={talk.beginsAt}
-                      endsAt={talk.endsAt}
-                      title={talk.title}
-                      bannerUrl={talk.bannerUrl}
-                      htmlDescription={talk.htmlDescription}
-                      type={talk.type}
-                    />
-                  ))}
+                  <Stack overflowY="scroll" maxH={{base: "90vh", md: "none"}}>
+                    {filteredTalks[type].map((talk) => (
+                      <TalkCard
+                        key={talk.id}
+                        beginsAt={talk.beginsAt}
+                        endsAt={talk.endsAt}
+                        title={talk.title}
+                        bannerUrl={talk.bannerUrl}
+                        htmlDescription={talk.htmlDescription}
+                        type={talk.type}
+                      />
+                    ))}
+                  </Stack>
                 </Stack>
               </GridItem>
             ))}
