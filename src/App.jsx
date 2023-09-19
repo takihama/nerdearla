@@ -1,4 +1,5 @@
 import {
+  Box,
   Card,
   Center,
   ChakraProvider,
@@ -24,6 +25,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import HeaderBanner from "./HeaderBanner";
 import NavBar from "./NavBar";
+import { TRACK_COLORS } from "./constants";
 
 const getTalks = async () =>
   axios.post("https://api.swapcard.com/graphql", {
@@ -181,6 +183,9 @@ const App = () => {
             {Object.keys(filteredTalks).map((type) => (
               <GridItem key={type} colSpan={1}>
                 <Stack gap={{ sm: 0.5, md: 2 }}>
+                  <Box bg={TRACK_COLORS[type]} textAlign="center">
+                    <Text color="white" fontWeight="medium">{type}</Text>
+                  </Box>
                   {filteredTalks[type].map((talk) => (
                     <TalkCard
                       key={talk.id}
