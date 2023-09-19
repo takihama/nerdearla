@@ -58,6 +58,10 @@ const mapTalks = (talks) =>
       (t.endsAt.substring(14, 16) - t.beginsAt.substring(11, 13)),
   }));
 
+const convertTimeToMin = (time) => {
+  return Number(time.substring(0, 2)) * 60 + Number(time.substring(3, 5));
+};
+
 const TalkCard = ({
   beginsAt,
   endsAt,
@@ -147,8 +151,8 @@ const App = () => {
 
         acc[dateKey] = acc[dateKey] || {};
 
-        (acc[dateKey][curr.place.split(" ")[0]] =
-          acc[dateKey][curr.place.split(" ")[0]] || []).push(curr);
+        (acc[dateKey][curr.place] =
+          acc[dateKey][curr.place] || []).push(curr);
 
         return acc;
       }, {});
@@ -178,25 +182,44 @@ const App = () => {
             templateColumns={`repeat(${
               Object.keys(filteredTalks).length
             }, 1fr)`}
+            // templateRows={`repeat(${(18 - 10) * 2}, 1fr)`}
             gap={{ sm: 0.5, md: 2 }}
           >
             {Object.keys(filteredTalks).map((type) => (
               <GridItem key={type} colSpan={1}>
-                <Stack gap={{ sm: 0.5, md: 2 }}>
+                <Stack gap={{ sm: 0.5, md: 2 }} position="relative">
                   <Box bg={TRACK_COLORS[type]} textAlign="center">
-                    <Text color="white" fontWeight="medium">{type}</Text>
+                    <Text color="white" fontWeight="medium">
+                      {type}
+                    </Text>
                   </Box>
-                  {filteredTalks[type].map((talk) => (
-                    <TalkCard
-                      key={talk.id}
-                      beginsAt={talk.beginsAt}
-                      endsAt={talk.endsAt}
-                      title={talk.title}
-                      bannerUrl={talk.bannerUrl}
-                      htmlDescription={talk.htmlDescription}
-                      type={talk.type}
-                    />
-                  ))}
+                  {/* <Box
+                    p={2}
+                    position="relative"
+                    width="100%"
+                    minHeight={`${(18 - 10) * 10}px`} // Adjust as needed
+                  > */}
+                    {filteredTalks[type].map((talk) => (
+                      <Box
+                        key={talk.id}
+                        position="absolute"
+                        top={`${30 +
+                          (convertTimeToMin(talk.beginsAt) - 10 * 60)*4.5
+                        }px`} // Adjust as needed
+                        left="0"
+                        minHeight={`${talk.durationInMin * 2.5}px`} // Adjust as needed"
+                      >
+                        <TalkCard
+                          beginsAt={talk.beginsAt}
+                          endsAt={talk.endsAt}
+                          title={talk.withEvent.title}
+                          bannerUrl={talk.bannerUrl}
+                          htmlDescription={talk.htmlDescription}
+                          type={talk.type}
+                        />
+                      </Box>
+                    ))}
+                  {/* </Box> */}
                 </Stack>
               </GridItem>
             ))}
