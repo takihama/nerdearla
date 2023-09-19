@@ -74,16 +74,18 @@ const TalkCard = ({
               <Flex alignItems={"center"}>
                 <TimeIcon />
                 <Text
-                  marginX={4}
+                  marginX={2}
                   fontStyle="normal"
                   fontSize="medium"
                   fontWeight="semibold"
                 >
-                  Inicia: {beginsAt.substring(11, 16)}
+                  {beginsAt.substring(11, 16)}
                 </Text>
-
-                <Text fontStyle="normal" fontSize="medium" fontWeight="semibold">
-                  Termina: {endsAt.substring(11, 16)}
+                <Text>
+                  -
+                </Text>
+                <Text fontStyle="normal" fontSize="medium" fontWeight="semibold" marginX={2}>
+                  {endsAt.substring(11, 16)}
                 </Text>
               </Flex>
               <Flex alignItems={"center"}>
