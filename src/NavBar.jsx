@@ -18,7 +18,7 @@ const NavBar = ({ onDateButtonClick }) => {
   };
 
   return (
-    <Stack direction="row" justifyContent="space-between">
+    <Stack direction="row" justifyContent={{base:"space-evenly", md: "space-between"}} flexWrap="wrap">
       {buttons.map((b) => (
         <Button
           key={b.name}

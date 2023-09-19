@@ -6,7 +6,7 @@ const HeaderBanner = () => {
         bg="black"
         color="white"
         textAlign="center"
-        py={4}
+        py={8}
       >
         <Image
           src="https://nerdear.la/static/img/logos/nerdearla-detailed-no-bg.svg"

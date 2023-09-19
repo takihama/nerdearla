@@ -164,7 +164,7 @@ const App = () => {
 
   return (
     <ChakraProvider>
-      <Container maxW="full" minH="100vh" bg="black" color="white" pt={8}>
+      <Container maxW="full" minH="100vh" bg="black" color="white" pt={9} px={{base: 4, md: 7}}>
         <NavBar onDateButtonClick={onDateButtonClick} />
 
         <HeaderBanner />
@@ -175,6 +175,7 @@ const App = () => {
           </Center>
         ) : (
           <Grid
+            sx={{overflowY: "auto"}}
             templateColumns={`repeat(${
               Object.keys(filteredTalks).length
             }, 1fr)`}
@@ -182,7 +183,7 @@ const App = () => {
           >
             {Object.keys(filteredTalks).map((type) => (
               <GridItem key={type} colSpan={1}>
-                <Stack gap={{ sm: 0.5, md: 2 }}>
+                <Stack gap={{ base: 1,sm: 0.5, md: 2 }} minW={240} marginX={1}>
                   <Box bg={TRACK_COLORS[type]} textAlign="center">
                     <Text color="white" fontWeight="medium">{type}</Text>
                   </Box>
