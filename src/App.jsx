@@ -16,7 +16,6 @@ import {
   Stack,
   Text,
   useDisclosure,
-  useMediaQuery
 } from "@chakra-ui/react";
 import { InfoOutlineIcon, TimeIcon } from "@chakra-ui/icons";
 import axios from "axios";
@@ -57,20 +56,29 @@ const TalkCard = ({
   type,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [isLargerThan800] = useMediaQuery('(min-width: 800px)')
 
   return (
-    <Card _hover={{ cursor: "pointer", transform: "scale(1.01)", transition: "all .2s" }}>
+    <Card
+      _hover={{
+        cursor: "pointer",
+        transform: "scale(1.01)",
+        transition: "all .2s",
+      }}
+    >
       <Image src={bannerUrl} onClick={onOpen} />
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent minW={isLargerThan800 ? 750: 0}>
+        <ModalContent minW={{ sm: "0px", md: "680px" }}>
           <ModalHeader>{title}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Image src={bannerUrl} onClick={onOpen} />
-            <Flex flexDirection={isLargerThan800 ? "row" : "column"} justifyContent={"space-evenly"} padding={4}>
+            <Flex
+              flexDirection={{ sm: "column", md: "row" }}
+              justifyContent={"space-evenly"}
+              padding={4}
+            >
               <Flex alignItems={"center"}>
                 <TimeIcon />
                 <Text
@@ -81,10 +89,13 @@ const TalkCard = ({
                 >
                   {beginsAt.substring(11, 16)}
                 </Text>
-                <Text>
-                  -
-                </Text>
-                <Text fontStyle="normal" fontSize="medium" fontWeight="semibold" marginX={2}>
+                <Text>-</Text>
+                <Text
+                  fontStyle="normal"
+                  fontSize="medium"
+                  fontWeight="semibold"
+                  marginX={2}
+                >
                   {endsAt.substring(11, 16)}
                 </Text>
               </Flex>
@@ -102,7 +113,9 @@ const TalkCard = ({
             </Flex>
             <Divider />
             <Divider />
-            <Text fontSize="sm" padding={2}>{htmlDescription}</Text>
+            <Text fontSize="sm" padding={2}>
+              {htmlDescription}
+            </Text>
           </ModalBody>
         </ModalContent>
       </Modal>
