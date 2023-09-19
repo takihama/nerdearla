@@ -91,7 +91,7 @@ const TalkCard = ({
               <Flex alignItems={"center"}>
                 <InfoOutlineIcon />
                 <Text
-                  marginX={4}
+                  marginX={2}
                   fontStyle="normal"
                   fontSize="medium"
                   fontWeight="semibold"
