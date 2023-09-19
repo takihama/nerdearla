@@ -16,6 +16,7 @@ import {
   Stack,
   Text,
   useDisclosure,
+  useMediaQuery
 } from "@chakra-ui/react";
 import { InfoOutlineIcon, TimeIcon } from "@chakra-ui/icons";
 import axios from "axios";
@@ -56,47 +57,50 @@ const TalkCard = ({
   type,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isLargerThan800] = useMediaQuery('(min-width: 800px)')
 
   return (
-    <Card>
+    <Card _hover={{ cursor: "pointer", transform: "scale(1.01)", transition: "all .2s" }}>
       <Image src={bannerUrl} onClick={onOpen} />
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent minW={isLargerThan800 ? 750: 0}>
           <ModalHeader>{title}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Image src={bannerUrl} onClick={onOpen} />
-            <Flex alignItems={"center"}>
-              <TimeIcon />
-              <Text
-                marginX={4}
-                fontStyle="normal"
-                fontSize="medium"
-                fontWeight="semibold"
-              >
-                Inicia: {beginsAt.substring(11, 16)}
-              </Text>
+            <Flex flexDirection={isLargerThan800 ? "row" : "column"} justifyContent={"space-evenly"} padding={4}>
+              <Flex alignItems={"center"}>
+                <TimeIcon />
+                <Text
+                  marginX={4}
+                  fontStyle="normal"
+                  fontSize="medium"
+                  fontWeight="semibold"
+                >
+                  Inicia: {beginsAt.substring(11, 16)}
+                </Text>
 
-              <Text fontStyle="normal" fontSize="medium" fontWeight="semibold">
-                Termina: {endsAt.substring(11, 16)}
-              </Text>
-            </Flex>
-            <Flex alignItems={"center"}>
-              <InfoOutlineIcon />
-              <Text
-                marginX={4}
-                fontStyle="normal"
-                fontSize="medium"
-                fontWeight="semibold"
-              >
-                Sala: {type}
-              </Text>
+                <Text fontStyle="normal" fontSize="medium" fontWeight="semibold">
+                  Termina: {endsAt.substring(11, 16)}
+                </Text>
+              </Flex>
+              <Flex alignItems={"center"}>
+                <InfoOutlineIcon />
+                <Text
+                  marginX={4}
+                  fontStyle="normal"
+                  fontSize="medium"
+                  fontWeight="semibold"
+                >
+                  Sala: {type}
+                </Text>
+              </Flex>
             </Flex>
             <Divider />
             <Divider />
-            <Text fontSize="sm">{htmlDescription}</Text>
+            <Text fontSize="sm" padding={2}>{htmlDescription}</Text>
           </ModalBody>
         </ModalContent>
       </Modal>
@@ -134,7 +138,7 @@ const App = () => {
 
   return (
     <ChakraProvider>
-      <Container maxW="full" minH="100vh" bg="black" color="white">
+      <Container maxW="full" minH="100vh" bg="black" color="white" pt={8}>
         <NavBar onDateButtonClick={onDateButtonClick} />
 
         <HeaderBanner />
@@ -144,7 +148,7 @@ const App = () => {
             <Spinner />
           </Center>
         ) : (
-          <Flex>
+          <Flex gap={2}>
             {Object.keys(filteredTalks).map((type) => (
               <>
                 <Stack key={type}>
