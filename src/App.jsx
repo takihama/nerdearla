@@ -10,6 +10,7 @@ import {
   Grid,
   GridItem,
   Image,
+  Link,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -167,7 +168,9 @@ const App = () => {
     <ChakraProvider>
       <Container maxW="full" minH="100vh" bg="black" color="white" pt={4} px={{base: 4, md: 7}}>
         <Box textAlign="center">
-          <Button mb={6} w={"350px"} colorScheme="blue" fontWeight={700} color="white">GET YOUR FREE TICKETS</Button>
+          <Link href="https://registro.nerdear.la/?utm_source=navbar" target="_blank" isExternal>
+            <Button mb={6} w={"350px"} colorScheme="blue" fontWeight={700} color="white">GET YOUR FREE TICKETS</Button>
+          </Link>
         </Box>
         
         <NavBar onDateButtonClick={onDateButtonClick} />
