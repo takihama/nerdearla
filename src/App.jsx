@@ -179,23 +179,21 @@ const App = () => {
             gap={{ sm: 0.5, md: 2 }}
           >
             {Object.keys(filteredTalks).map((type) => (
-              <>
-                <GridItem key={type} colSpan={1}>
-                  <Stack gap={{ sm: 0.5, md: 2 }}>
-                    {filteredTalks[type].map((talk) => (
-                      <TalkCard
-                        key={talk.id}
-                        beginsAt={talk.beginsAt}
-                        endsAt={talk.endsAt}
-                        title={talk.title}
-                        bannerUrl={talk.bannerUrl}
-                        htmlDescription={talk.htmlDescription}
-                        type={talk.type}
-                      />
-                    ))}
-                  </Stack>
-                </GridItem>
-              </>
+              <GridItem key={type} colSpan={1}>
+                <Stack gap={{ sm: 0.5, md: 2 }}>
+                  {filteredTalks[type].map((talk) => (
+                    <TalkCard
+                      key={talk.id}
+                      beginsAt={talk.beginsAt}
+                      endsAt={talk.endsAt}
+                      title={talk.title}
+                      bannerUrl={talk.bannerUrl}
+                      htmlDescription={talk.htmlDescription}
+                      type={talk.type}
+                    />
+                  ))}
+                </Stack>
+              </GridItem>
             ))}
           </Grid>
         )}
