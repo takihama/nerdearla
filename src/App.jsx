@@ -1,33 +1,21 @@
 import {
   Box,
-  Button,
-  Card,
   Center,
   ChakraProvider,
   Container,
-  Divider,
-  Flex,
   Grid,
   GridItem,
-  Image,
-  Link,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
   Spinner,
   Stack,
   Text,
-  useDisclosure,
 } from "@chakra-ui/react";
-import { InfoOutlineIcon, TimeIcon } from "@chakra-ui/icons";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import HeaderBanner from "./HeaderBanner";
-import NavBar from "./NavBar";
+import { HeaderBanner } from "./components/HeaderBanner";
+import { NavBar } from "./components/NavBar";
+import { TalkCard } from "./components/TalkCard";
 import { TRACK_COLORS } from "./constants";
+import { GetTicketsButton } from "./components/FreeTicketsButton";
 
 const getTalks = async () =>
   axios.post("https://api.swapcard.com/graphql", {
@@ -56,82 +44,6 @@ const mapTalks = (talks) =>
     beginsAt: t.beginsAt.substring(11, 16),
     endsAt: t.endsAt.substring(11, 16),
   }));
-
-const TalkCard = ({
-  beginsAt,
-  endsAt,
-  bannerUrl,
-  title,
-  htmlDescription,
-  type,
-}) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  return (
-    <Card
-      _hover={{
-        cursor: "pointer",
-        transform: "scale(1.01)",
-        transition: "all .2s",
-      }}
-    >
-      <Image src={bannerUrl} onClick={onOpen} />
-
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent minW={{ sm: "0px", md: "680px" }}>
-          <ModalHeader>{title}</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Image src={bannerUrl} onClick={onOpen} />
-            <Flex
-              flexDirection={{ sm: "column", md: "row" }}
-              justifyContent={"space-evenly"}
-              padding={4}
-            >
-              <Flex alignItems={"center"}>
-                <TimeIcon />
-                <Text
-                  marginX={2}
-                  fontStyle="normal"
-                  fontSize="medium"
-                  fontWeight="semibold"
-                >
-                  {beginsAt}
-                </Text>
-                <Text>-</Text>
-                <Text
-                  fontStyle="normal"
-                  fontSize="medium"
-                  fontWeight="semibold"
-                  marginX={2}
-                >
-                  {endsAt}
-                </Text>
-              </Flex>
-              <Flex alignItems={"center"}>
-                <InfoOutlineIcon />
-                <Text
-                  marginX={2}
-                  fontStyle="normal"
-                  fontSize="medium"
-                  fontWeight="semibold"
-                >
-                  Sala: {type}
-                </Text>
-              </Flex>
-            </Flex>
-            <Divider />
-            <Divider />
-            <Text fontSize="sm" padding={2}>
-              {htmlDescription}
-            </Text>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-    </Card>
-  );
-};
 
 const App = () => {
   const [talks, setTalks] = useState([]);
@@ -163,51 +75,67 @@ const App = () => {
 
   return (
     <ChakraProvider>
-      <Container maxW="full" minH="100vh" bg="black" color="white" pt={4} px={{base: 4, md: 7}}>
-        <Box textAlign="center">
-          <Link href="https://registro.nerdear.la/?utm_source=navbar" target="_blank" isExternal>
-            <Button mb={6} w={"350px"} colorScheme="blue" fontWeight={700} color="white">GET YOUR FREE TICKETS</Button>
-          </Link>
-        </Box>
-        
+      <Container
+        maxW="full"
+        minH="100vh"
+        bg="black"
+        color="white"
+        py={4}
+        px={{ base: 4, md: 7 }}
+      >
+        <GetTicketsButton />
+
         <NavBar onDateButtonClick={onDateButtonClick} />
 
-        <HeaderBanner url="https://nerdear.la/"/>
-        
+        <HeaderBanner url="https://nerdear.la/" />
+
         {loading ? (
           <Center>
             <Spinner />
           </Center>
         ) : (
           <Grid
-            sx={{overflowY: "auto"}}
+            sx={{ overflowY: "auto" }}
             templateColumns={`repeat(${
               Object.keys(filteredTalks).length
             }, 1fr)`}
             gap={{ sm: 0.5, md: 2 }}
           >
-            {Object.keys(filteredTalks).sort().map((type) => (
-              <GridItem key={type} colSpan={1}>
-                <Stack gap={{ base: 1, sm: 0.5, md: 2 }} minW={{base: 240, md: 0}} marginX={1}>
-                  <Box bg={TRACK_COLORS[type]} textAlign="center">
-                    <Text color="white" fontWeight="medium">{type}</Text>
-                  </Box>
-                  <Stack overflowY="scroll" maxH={{base: "90vh", md: "none"}}>
-                    {filteredTalks[type].sort((a, b) => a.beginsAt >= b.beginsAt ? 1 : -1).map((talk) => (
-                      <TalkCard
-                        key={talk.id}
-                        beginsAt={talk.beginsAt}
-                        endsAt={talk.endsAt}
-                        title={talk.title}
-                        bannerUrl={talk.bannerUrl}
-                        htmlDescription={talk.htmlDescription}
-                        type={talk.type}
-                      />
-                    ))}
+            {Object.keys(filteredTalks)
+              .sort()
+              .map((type) => (
+                <GridItem key={type} colSpan={1}>
+                  <Stack
+                    gap={{ base: 1, sm: 0.5, md: 2 }}
+                    minW={{ base: 240, md: 0 }}
+                    marginX={1}
+                  >
+                    <Box bg={TRACK_COLORS[type]} textAlign="center">
+                      <Text color="white" fontWeight="medium">
+                        {type}
+                      </Text>
+                    </Box>
+                    <Stack
+                      overflowY="scroll"
+                      maxH={{ base: "90vh", md: "none" }}
+                    >
+                      {filteredTalks[type]
+                        .sort((a, b) => (a.beginsAt >= b.beginsAt ? 1 : -1))
+                        .map((talk) => (
+                          <TalkCard
+                            key={talk.id}
+                            beginsAt={talk.beginsAt}
+                            endsAt={talk.endsAt}
+                            title={talk.title}
+                            bannerUrl={talk.bannerUrl}
+                            htmlDescription={talk.htmlDescription}
+                            type={talk.type}
+                          />
+                        ))}
+                    </Stack>
                   </Stack>
-                </Stack>
-              </GridItem>
-            ))}
+                </GridItem>
+              ))}
           </Grid>
         )}
       </Container>

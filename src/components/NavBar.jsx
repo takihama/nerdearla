@@ -9,7 +9,7 @@ const buttons = [
   { name: "2023-09-30", label: "Saturday 30" },
 ];
 
-const NavBar = ({ onDateButtonClick }) => {
+export const NavBar = ({ onDateButtonClick }) => {
   const [selectedButton, setSelectedButton] = useState("2023-09-26");
 
   const onButtonClick = (date) => {
@@ -34,5 +34,3 @@ const NavBar = ({ onDateButtonClick }) => {
     </Stack>
   );
 };
-
-export default NavBar;
