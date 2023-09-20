@@ -10,9 +10,12 @@ export const GetTicketsButton = () => (
       <Button
         mb={6}
         w={"350px"}
-        colorScheme="blue"
-        fontWeight={700}
+        borderRadius={100}
+        bg="brand.nerdGreen"
+        _hover={{ border: '2px' }}
         color="white"
+        fontWeight={700}
+        fontFamily="style.heading"
       >
         GET YOUR FREE TICKETS
       </Button>

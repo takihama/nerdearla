@@ -8,6 +8,7 @@ import {
   Spinner,
   Stack,
   Text,
+  extendTheme,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -16,6 +17,7 @@ import { NavBar } from "./components/NavBar";
 import { TalkCard } from "./components/TalkCard";
 import { TRACK_COLORS } from "./constants";
 import { GetTicketsButton } from "./components/FreeTicketsButton";
+import './fonts.css';
 
 const getTalks = async () =>
   axios.post("https://api.swapcard.com/graphql", {
@@ -33,6 +35,23 @@ const getTalks = async () =>
         version: 1,
         sha256Hash:
           "451a05a3182a71b2515b9a3a22ef77641537ed87e2c07fe8af33f862e5cb6aea",
+      },
+    },
+  });
+
+  const theme = extendTheme({
+    colors: {
+      brand: {
+        nerdRed: '#ff323c',
+        nerdGreen: '#00aca8',
+        nerdYellow: '#ffba00',
+        nerdOrange: '#f98232',
+      },
+    },
+    fonts: {
+      style: {
+        body: "Helvetica Neue, sans-serif",
+        heading: "Rift Soft, sans-serif",
       },
     },
   });
@@ -74,7 +93,7 @@ const App = () => {
   };
 
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <Container
         maxW="full"
         minH="100vh"
@@ -111,7 +130,7 @@ const App = () => {
                     marginX={1}
                   >
                     <Box bg={TRACK_COLORS[type]} textAlign="center">
-                      <Text color="white" fontWeight="medium">
+                      <Text color="white" fontWeight="medium" fontFamily="style.heading">
                         {type}
                       </Text>
                     </Box>
