@@ -25,8 +25,12 @@ export const NavBar = ({ onDateButtonClick }) => {
           size={{ base: "xs", md: "sm", lg: "md" }}
           name={b.name}
           onClick={() => onButtonClick(b.name)}
-          colorScheme="orange"
-          variant={selectedButton === b.name ? "solid" : "outline"}
+          bg="brand.nerdOrange"
+          _hover={{ bg: 'brand.nerdYellow' }}
+          fontFamily="style.heading"
+          color="white"
+          borderRadius={100}
+          variant={selectedButton === b.name ? "outline" : "solid"}
         >
           {b.label}
         </Button>
